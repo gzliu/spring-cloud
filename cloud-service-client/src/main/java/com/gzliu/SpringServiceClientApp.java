@@ -12,11 +12,11 @@ package com.gzliu;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,12 +27,12 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2017年4月26日 下午6:14:34 
  *  
  */
-@Configuration
-@ComponentScan
+
 @SpringBootApplication
 @EnableEurekaClient
 @RestController
-@RequestMapping("/report")
+//@RequestMapping("/report")
+//@RefreshScope
 public class SpringServiceClientApp {
 	
 	
@@ -40,6 +40,14 @@ public class SpringServiceClientApp {
 	public String home(HttpServletRequest request,HttpServletResponse response){
 		
 		return "home page "+request.getServerPort();
+	}
+	
+	@Value("${foo}")
+	String foo;
+
+	@RequestMapping(value = "/hi")
+	public String hi(){
+		return foo;
 	}
 	
 	/*@RequestMapping("/report")
